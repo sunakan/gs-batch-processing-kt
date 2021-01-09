@@ -1,0 +1,42 @@
+= SpringBatchの練習 with Kotlin
+
+src/main/resources/sample-data.csv
+
+を読み込んで、1行=1Personインスタンス、FirstName/LastNameを全部大文字にしてDBに突っ込む
+
+== 実行
+
+.00-build
+----
+$ docker-compose build
+----
+
+.01-springboot側
+----
+$ docker-compose run --rm app bash
+コンテナ内
+$ gradle bootRun
+----
+
+.02-db側で確認(別シェル)
+----
+$ docker-compose exec db bash
+コンテナ内
+$ psql -U postgres -d app-local
+DB内
+app-local=# select * from people;
+ person_id | first_name | last_name
+-----------+------------+-----------
+         1 | JILL       | DOE
+         2 | JOE        | DOE
+         3 | JUSTIN     | DOE
+         4 | JANE       | DOE
+         5 | JOHN       | DOE
+----
+
+== Format
+
+.コンテナ内
+----
+$ gradle ktlintFormat
+----
