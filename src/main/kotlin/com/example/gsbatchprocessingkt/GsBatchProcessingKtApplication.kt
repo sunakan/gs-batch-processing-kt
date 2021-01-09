@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class GsBatchProcessingKtApplication
 
 fun main(args: Array<String>) {
-	runApplication<GsBatchProcessingKtApplication>(*args)
+    runApplication<GsBatchProcessingKtApplication>(*args)
 }
