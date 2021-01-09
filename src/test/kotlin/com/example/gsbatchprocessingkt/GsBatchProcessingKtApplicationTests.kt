@@ -9,5 +9,4 @@ class GsBatchProcessingKtApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }
