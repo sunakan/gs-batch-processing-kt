@@ -5,6 +5,12 @@ plugins {
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
     kotlin("jvm") version "1.4.21"
     kotlin("plugin.spring") version "1.4.21"
+
+    // -----------------------------------------------------------------------------
+    // 参考：https://plugins.gradle.org/plugin/org.jlleitschuh.gradle.ktlint
+    // $ gradle ktlintFormat
+    // -----------------------------------------------------------------------------
+    id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
 }
 
 group = "com.example"
@@ -40,4 +46,15 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.register("downloadDependencies") {
+    doLast {
+        val allDeps = configurations.names
+                .map { configurations[it] }
+                .filter { it.isCanBeResolved }
+                .map { it.resolve().size }
+                .sum()
+        println("Downloaded all dependencies: $allDeps")
+    }
 }
