@@ -1,10 +1,10 @@
 package com.example.gsbatchprocessingkt
 
 import com.example.gsbatchprocessingkt.entity.Person
-import kotlin.Throws
 import org.slf4j.LoggerFactory
 import org.springframework.batch.item.ItemProcessor
 import java.lang.Exception
+import kotlin.Throws
 
 class PersonItemProcessor : ItemProcessor<Person, Person> {
     @Throws(Exception::class)

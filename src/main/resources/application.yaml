@@ -8,6 +8,5 @@ spring:
     password: postgres
   batch:
     initialize-schema: always
-
 slack:
-webhook-url: "dummy-url on application.yaml"
+  webhook-url: "dummy-url on application.yaml"
