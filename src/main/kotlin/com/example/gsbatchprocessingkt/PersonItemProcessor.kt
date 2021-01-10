@@ -9,10 +9,11 @@ import kotlin.Throws
 class PersonItemProcessor : ItemProcessor<Person, Person> {
     @Throws(Exception::class)
     override fun process(person: Person): Person {
+        println("--------------------------------------------------------------------process")
         val firstName = person.firstName.toUpperCase()
         val lastName = person.lastName.toUpperCase()
         val transformedPerson = Person(firstName, lastName)
-        log.info("Converting ($person) into ($transformedPerson)")
+        // log.info("Converting ($person) into ($transformedPerson)")
         return transformedPerson
     }
 
