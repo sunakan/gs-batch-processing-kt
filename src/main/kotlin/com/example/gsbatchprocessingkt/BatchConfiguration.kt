@@ -14,6 +14,10 @@ import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilde
 import org.springframework.batch.item.file.FlatFileItemReader
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper
+import org.springframework.batch.item.file.mapping.FieldSetMapper
+import org.springframework.batch.item.file.transform.DefaultFieldSetFactory
+import org.springframework.batch.item.file.transform.FieldSet
+import org.springframework.batch.item.file.transform.LineTokenizer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -52,16 +56,9 @@ class BatchConfiguration {
     fun reader(): FlatFileItemReader<Person> {
         return FlatFileItemReaderBuilder<Person>()
             .name("personItemReader")
+            .lineTokenizer(CsvTokenizer())
+            .fieldSetMapper(PersonFieldSetMapper())
             .resource(ClassPathResource("sample-data.csv"))
-            .delimited()
-            .names(*arrayOf("firstName", "lastName"))
-            .fieldSetMapper(
-                object : BeanWrapperFieldSetMapper<Person?>() {
-                    init {
-                        setTargetType(Person::class.java)
-                    }
-                }
-            )
             .build()
     }
 
@@ -72,5 +69,23 @@ class BatchConfiguration {
             .sql("INSERT INTO people (first_name, last_name) VALUES (:firstName, :lastName)")
             .dataSource(dataSource!!)
             .build()
+    }
+
+    class CsvTokenizer() : LineTokenizer {
+        override fun tokenize(csvLine: String?): FieldSet {
+            if (csvLine == null) throw Exception()
+            val fields = csvLine.split(",").toTypedArray()
+            val names = arrayOf("firstName", "lastName")
+            return  DefaultFieldSetFactory().create(fields, names)
+        }
+    }
+
+    class PersonFieldSetMapper : FieldSetMapper<Person> {
+        override fun mapFieldSet(fs: FieldSet): Person {
+            return Person(
+                    firstName = fs.readString("firstName"),
+                    lastName = fs.readString("lastName")
+            )
+        }
     }
 }
