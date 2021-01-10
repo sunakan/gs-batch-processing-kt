@@ -49,6 +49,9 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+// ##############################################################################
+// 手書き
+// ##############################################################################
 tasks.register("downloadDependencies") {
     doLast {
         val allDeps = configurations.names
@@ -58,4 +61,8 @@ tasks.register("downloadDependencies") {
             .sum()
         println("Downloaded all dependencies: $allDeps")
     }
+}
+
+tasks.withType<org.springframework.boot.gradle.tasks.run.BootRun> {
+    args("--spring.profiles.active=develop")
 }

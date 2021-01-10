@@ -2,6 +2,7 @@ package com.example.gsbatchprocessingkt
 
 import com.example.gsbatchprocessingkt.component.JobCompletionNotificationListener
 import com.example.gsbatchprocessingkt.entity.Person
+import com.example.gsbatchprocessingkt.property.ProfileProperty4Debug
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing
@@ -26,13 +27,16 @@ import javax.sql.DataSource
 @EnableBatchProcessing
 class BatchConfiguration {
     @Bean
-    fun job1(jobBuilderFactory: JobBuilderFactory, listener: JobCompletionNotificationListener, job1step1: Step): Job {
+    fun job1(jobBuilderFactory: JobBuilderFactory, listener: JobCompletionNotificationListener, job1step1: Step, debugProperty: ProfileProperty4Debug): Job {
         println("--------------------------------------------------------------------------------job1 begin")
         println(jobBuilderFactory)
         println("---")
         println(listener)
         println("---")
         println(job1step1)
+        println("---debug")
+        println(debugProperty)
+        println(debugProperty.fileName)
         println("--------------------------------------------------------------------------------job1 end")
         return jobBuilderFactory["job1"]
             .incrementer(RunIdIncrementer())

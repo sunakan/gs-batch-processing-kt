@@ -12,14 +12,14 @@ include makefiles/help.mk
 ################################################################################
 # タスク
 ################################################################################
-.PHONY: build
-build:
+.PHONY: docker-build
+docker-build:
 	docker-compose build
 
-.PHONY: bash
-bash:
+.PHONY: docker-bash
+docker-bash:
 	docker-compose run --rm app bash
 
-.PHONY: down
-down:
+.PHONY: docker-down
+docker-down:
 	docker-compose down

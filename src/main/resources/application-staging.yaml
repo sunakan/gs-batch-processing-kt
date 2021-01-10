@@ -1,7 +1,7 @@
 ---
 
 profile4debug:
-  file-name: application.yaml
+  file-name: application-staging.yaml
 
 spring:
   datasource:
@@ -12,4 +12,4 @@ spring:
   batch:
     initialize-schema: always
 slack:
-  webhook-url: "dummy-url on application.yaml"
+  webhook-url: "dummy-url on application-staging.yaml"
